@@ -1,101 +1,83 @@
-# VoxCipher
-# README for Speech-to-Text, Translation, and Text-to-Speech Converter
+# VoxCipher - Python Project
 
 ## Overview
-This project demonstrates a Python-based application that processes speech recognition, translates text into a random language, and converts both the original and translated text into audio files using the Google Text-to-Speech (gTTS) library. The project combines multiple functionalities including:
-- Speech recognition from an audio file.
-- Translation of recognized text into a randomly selected language.
-- Text-to-Speech conversion of both the original and translated text.
+**VoxCipher** is a Python-based project that integrates multiple functionalities related to speech processing, Morse code conversion, and language translation. The core of the project revolves around converting audio into text, encoding that text into Morse code, decoding it back to text, and then converting it back into speech. Additionally, the project includes a translation module that translates a given word (e.g., "hello") into various languages and generates speech for the translated word.
 
-## Features
-1. **Speech Recognition**: Convert speech from an audio file into text using the `SpeechRecognition` library.
-2. **Morse Code Conversion**: Convert the recognized speech to morse code and back to plain text.
-3. **Text Translation**: Translate the recognized text into a randomly selected language using the `translate` library.
-4. **Text-to-Speech Conversion**: Convert both the original English text and the translated text to speech and save them as `.wav` audio files using the `gTTS` library.
+### Key Features
+1. **Speech to Text**: Converts spoken words from an audio file into text using the `SpeechRecognition` library.
+2. **Text to Morse**: Encodes the recognized text into Morse code.
+3. **Morse to Text**: Decodes the Morse code back into plain text.
+4. **Text to Speech**: Converts the decoded text back into speech using the Google Text-to-Speech (`gTTS`) library.
+5. **Language Translation**: Translates the word "hello" into different languages based on user input and converts the translated word into speech.
 
-## Libraries Used
-- `SpeechRecognition`: For speech-to-text conversion.
-- `gTTS`: For converting text to speech.
-- `translate`: For translating text into a different language.
-- `random`: To randomly select a language for translation.
+### Workflow Summary
+1. **Speech to Text**: 
+   - Input audio is processed to extract speech and convert it to text.
+   - The `SpeechRecognition` library is used for this purpose.
+   
+2. **Text to Morse**:
+   - The extracted text is encoded into Morse code using a predefined mapping of characters to Morse symbols.
+   
+3. **Morse to Text**:
+   - The encoded Morse code is decoded back into plain text.
 
-## Requirements
-Make sure the following Python libraries are installed:
+4. **Text to Speech**:
+   - The decoded text is converted back into speech using the `gTTS` (Google Text-to-Speech) library.
+   - The output speech is saved as an audio file.
+
+5. **Translation and Text-to-Speech**:
+   - The word "hello" is translated into a language chosen by the user (e.g., Spanish, French, German, Korean, etc.).
+   - The translated text is converted into speech, and the audio output is generated.
+
+## Installation
+
+To use VoxCipher, you need to install the following Python libraries:
+
 ```bash
 pip install SpeechRecognition
 pip install gtts
 pip install translate
 ```
 
-## Usage
-1. **Speech Recognition**:
-   - Load an audio file and convert the speech in the file to text using the `SpeechRecognition` library.
+## How to Run
 
-2. **Morse Code Conversion**:
-   - Encode the recognized text into Morse code and decode it back to English.
+1. **Speech to Text, Morse Code Conversion, and Text-to-Speech Loop**:
+   - The project first converts audio input to text using speech recognition.
+   - Then, it converts the text into Morse code and back into plain text.
+   - Finally, it generates a speech output from the decoded text using `gTTS`.
 
-3. **Text Translation**:
-   - Randomly select a language from a list of languages.
-   - Translate the recognized text into the selected language using the `translate` library.
+2. **Language Translation and Text-to-Speech**:
+   - The project offers a simple interface where the user can choose a language.
+   - The word "hello" is translated to the chosen language, and the translated word is converted into speech using `gTTS`.
 
-4. **Text-to-Speech**:
-   - Convert both the recognized English text and the translated text into audio using `gTTS`.
-   - Save the audio files in `.wav` format and play them using `IPython.display.Audio`.
+## Example Usage
 
-## Code Walkthrough
+### Speech to Text and Morse Code Loop:
+
 ```python
+from speech_recognition import Recognizer, AudioFile
 from gtts import gTTS
-from IPython.display import Audio
-from translate import Translator
-import random
+import os
 
-# Language assigned for the audio
-language = "en"
-
-# Object assigned for converting text to speech
-gtts_object = gTTS(text=english_plain_text, lang=language, slow=False)
-
-# Saving the content in the audio file in .wav format
-gtts_object.save("/content/gtts.wav")
-
-# Playing the saved audio file
-Audio("/content/gtts.wav")
-
-# List of random languages to choose from
-languages = ["English", "Spanish", "French", "German", "Russian", "Mandarin", "Arabic", "Portuguese", "Italian"]
-
-# Selecting a random language
-random_language = random.choice(languages)
-print("Random language:", random_language)
-
-# Creating a translator object for the selected language
-translator = Translator(to_lang=random_language)
-
-# Translating the text to the random language
-translation = translator.translate(text)
-print("The translation of text is:", translation)
-
-# Converting the translated text to speech in a specific language (e.g., Korean)
-text_to_say = translation
-language = "ko"  # Korean language code
-
-# Creating gTTS object for the translated text
-gtts_object = gTTS(text=text_to_say, lang=language, slow=False)
-
-# Saving the translated speech as an audio file
-gtts_object.save("/content/gtts.wav")
-
-# Playing the saved audio file
-Audio("/content/gtts.wav")
+# Recognize speech from audio, convert it to Morse, and back to text
+# Finally convert text to speech and save as .wav
 ```
 
-## How to Run the Code
-1. Ensure you have the required libraries installed.
-2. Run the Python script.
-3. The script will process an audio file for speech recognition, convert the recognized text into Morse code and back to plain text, translate it into a randomly chosen language, and convert the translated text to speech.
+### Language Translation:
 
-## Notes
-- The script processes an audio file containing speech, so ensure that the file is in a format that the `SpeechRecognition` library supports.
-- The translation is done into a randomly selected language each time the script is run.
-- Both the original and translated texts are converted to speech and saved as `.wav` files.
+```python
+from translate import Translator
+from gtts import gTTS
 
+# Translate 'hello' into a selected language and convert it into speech.
+```
+
+## Supported Languages for Translation
+- **English**
+- **Spanish**
+- **French**
+- **German**
+- **Korean**
+- **Mandarin**
+- **Arabic**
+- **Portuguese**
